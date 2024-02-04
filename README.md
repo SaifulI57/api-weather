@@ -1,12 +1,13 @@
-<div align="center" style="font-size: 4vw;font-weight: bold">Endpoint</div>
+<h1 align="center">Endpoint</h1>
 
 ## Region
 
-- GET /region/:provinsi
+-   GET /region/:provinsi
 
 ```json
 {
   "name": "aceh",
+  "path": "*.xml"
   "date": "3 feb 2024, 20:59:21 WIB",
   "kab": {
     "acehbarat": {},
@@ -16,7 +17,7 @@
 }
 ```
 
-- GET /region/:provinsi?f=kab
+-   GET /region/:provinsi?f=kab
 
 ```json
 {
@@ -27,7 +28,7 @@
 
 ## Regency
 
-- GET /region/:provinsi/regency/:kabupaten
+-   GET /region/:provinsi/regency/:kabupaten
 
 ```json
 {
@@ -43,7 +44,7 @@
 }
 ```
 
-- GET /region/:provinsi/regency/:kabupaten?f=hu
+-   GET /region/:provinsi/regency/:kabupaten?f=hu
 
 ```json
 {

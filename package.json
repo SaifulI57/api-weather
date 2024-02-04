@@ -1,25 +1,31 @@
 {
-  "name": "api-weather",
-  "version": "1.0.0",
-  "description": "api weather",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/SaifulI57"
-  },
-  "keywords": [
-    "api",
-    "weather",
-    "mongoodb",
-    "bmkg",
-    "forecast",
-    "digital",
-    "forecast",
-    "humidity"
-  ],
-  "author": "Saiful",
-  "license": "MIT"
+    "name": "api-weather",
+    "version": "1.0.0",
+    "description": "api weather",
+    "type": "module",
+    "main": "index.js",
+    "scripts": {
+        "start": "nodemon index.js",
+        "test": "node functions/weathers.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/SaifulI57"
+    },
+    "keywords": [
+        "api",
+        "weather",
+        "mongoodb",
+        "bmkg",
+        "forecast",
+        "digital",
+        "forecast",
+        "humidity"
+    ],
+    "author": "Saiful",
+    "license": "MIT",
+    "dependencies": {
+        "jsdom": "^24.0.0",
+        "xmldom": "^0.6.0"
+    }
 }
