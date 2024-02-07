@@ -1,21 +1,24 @@
-import { JSDOM as jdom } from 'jsdom';
-import { DOMParser as xdom } from 'xmldom';
-import axios from 'axios';
-// import fs from 'fs';
+import { JSDOM as jdom } from "jsdom";
+import { DOMParser as xdom } from "xmldom";
+import axios from "axios";
+import Logging from "../logging/Logging.js";
+import { prov } from "../schema/prov.js";
+import fs from "fs";
+let L = new Logging();
 
 let jd = new jdom();
 let xd = new xdom();
 
-let url = 'https://data.bmkg.go.id/prakiraan-cuaca/';
+let url = "https://data.bmkg.go.id/prakiraan-cuaca/";
 
-let getUpdates = async () => {
+export let getUpdates = async () => {
     let data = await axios.get(url).then((r) => {
         jd = new jdom(r.data);
         let obj = {};
-        let tr = jd.window.document.getElementsByTagName('tr');
+        let tr = jd.window.document.getElementsByTagName("tr");
         for (let i = 1; i < tr.length; i++) {
-            obj[tr[i].cells[1].textContent.split(' ').join('').toLowerCase().replace('provinsi', '').replaceAll(',', '')] = {
-                name: tr[i].cells[1].textContent.split(' ').join().toLowerCase().replace('provinsi', '').replaceAll(',', ''),
+            obj[tr[i].cells[1].textContent.split(" ").join("").toLowerCase().replace("provinsi", "").replaceAll(",", "")] = {
+                name: tr[i].cells[1].textContent.split(" ").join().toLowerCase().replace("provinsi", "").replaceAll(",", ""),
                 path: tr[i].cells[2].textContent,
                 update: tr[i].cells[3].textContent
             };
@@ -26,64 +29,80 @@ let getUpdates = async () => {
     return data;
 };
 
+// export let getProvinsi = async;
+// let updateData = async (d) => {
+//     await Prov.findOne({ where: { update: d } });
+// };
+
 let getData = async (d) => {
     let obj = {};
     let arr = [];
     let path = [];
-    let getParam = (pr) => {
+    let getParam = (pr, n) => {
         let obj = {};
         for (let i = 0; i < pr.length; i++) {
-            let attr = {};
-            let desc = pr[i].getAttribute('id');
-            let timerange = pr[i].getElementsByTagName('timerange');
+            let attr = [];
+            let desc = pr[i].getAttribute("id");
+            let timerange = pr[i].getElementsByTagName("timerange");
+            let type = pr[i].getAttribute("type");
             for (let j = 0; j < timerange.length; j++) {
-                let value = timerange[j].getElementsByTagName('value');
-                let type = timerange[j].getAttribute('type');
-                let hour = timerange[j].getAttribute('h');
-                let day = timerange[j].getAttribute('day');
+                let value = timerange[j].getElementsByTagName("value");
+                let hour = timerange[j].getAttribute("h");
+                let day = timerange[j].getAttribute("day");
                 let daily;
                 try {
-                    daily = day.split('')[day.length - 2].concat(day.split('')[day.length - 1]);
+                    daily = day.split("")[day.length - 2].concat(day.split("")[day.length - 1]);
                 } catch (e) {
                     daily = undefined;
                 }
-                let time = type === 'hourly' ? hour : daily;
+                let cek = type === "hourly";
+                let time = cek ? hour : daily;
                 let temp = [];
                 for (let h = 0; h < value.length; h++) {
-                    let val = value[h].textContent + ' ' + value[h].getAttribute('unit');
+                    let val = value[h].textContent + " " + value[h].getAttribute("unit");
                     temp.push(val);
                 }
-                attr[time] = {
-                    type: type,
-                    time: time,
-                    data: temp
-                };
+                if (cek) {
+                    attr.push({
+                        h: time,
+                        value: temp
+                    });
+                } else {
+                    attr.push({
+                        d: time,
+                        value: temp
+                    });
+                }
             }
-            obj[desc] = attr;
+            obj[desc] = {
+                format: type,
+                t: attr
+            };
         }
-        return obj;
+
+        return {
+            name: n,
+            data: obj
+        };
     };
     let getArea = (fr) => {
-        let obj = {};
+        let obj = [];
         for (let i = 0; i < fr.length; i++) {
-            let desc = fr[i].getAttribute('description').replaceAll(' ', '_').replaceAll('.', '').replaceAll('-', '').toLowerCase();
-            obj[desc] = getParam(fr[i].getElementsByTagName('parameter'));
+            let desc = fr[i].getAttribute("description").toLowerCase();
+            obj.push(getParam(fr[i].getElementsByTagName("parameter"), desc));
         }
         return obj;
     };
     let fetch = async (n, p, i) => {
         await axios
             .get(`https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/${p[i]}`)
-            .then((fc) => xd.parseFromString(fc.data, 'text/xml'))
+            .then((fc) => xd.parseFromString(fc.data, "text/xml"))
             .then((ft) => {
-                let forecast = ft.getElementsByTagName('area');
-                obj[n[i]] = {
-                    ...d[n[i]],
-                    kab: getArea(forecast)
-                };
+                let forecast = ft.getElementsByTagName("area");
+                obj[n[i]] = getArea(forecast, n[i]);
             });
         if (i === p.length - 1) {
-            console.log('done fetching');
+            L.info("done fetching");
         } else {
             await fetch(n, p, i + 1);
         }
@@ -95,12 +114,10 @@ let getData = async (d) => {
     await fetch(arr, path, 0);
     return obj;
 };
-let start = async () => {
+export let start = async () => {
     let u = await getUpdates();
     let y = await getData(u);
     return y;
 };
 
-export { start };
-
-// fs.writeFileSync('foracast.json', JSON.stringify(y));
+// fs.writeFileSync("foracast.json", JSON.stringify(y));
