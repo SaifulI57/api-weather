@@ -36,7 +36,7 @@ export let findRegency = async (req, res) => {
     if (!q.kabupaten) res.status(404).json({ message: "silahkan masukkan kabupaten" });
     let obj;
     try {
-        if (que) {
+        if (Object.keys(que).length !== 0) {
             let filter = `name data.${que.f} -_id`;
             que.onlyData
                 ? (async () => {
@@ -59,12 +59,13 @@ export let findRegency = async (req, res) => {
                       try {
                           obj.length === 0 && obj !== undefined ? res.status(404).json({ message: "Kabupaten tidak ditemukan" }) : res.status(200).json(obj.data);
                       } catch (e) {
-                          L.error("kesalahan init obj");
+                          L.error("kesalahan init obj 1");
                       }
                   })()
                 : (async () => {
                       try {
                           let temp = que.f.split(" ");
+                          console.log(temp);
                           if (temp.length === 1) obj = await kab.findOne({ name: q.kabupaten }, filter).lean();
                           if (temp.length > 1) {
                               filter = "name ";
@@ -81,7 +82,7 @@ export let findRegency = async (req, res) => {
                       try {
                           obj.length === 0 && obj !== undefined ? res.status(404).json({ message: "Kabupaten tidak ditemukan" }) : res.status(200).json(obj);
                       } catch (e) {
-                          L.error("kesalahan init obj");
+                          L.error("kesalahan init obj 2");
                       }
                   })();
         } else {
