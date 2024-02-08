@@ -25,6 +25,11 @@ export let updating = async (req, res) => {
     }
 };
 
+export let getAllprovinsi = async (req, res) => {
+    let doc = await prov.find({}, "-_id -__v");
+    res.status(200).json(doc);
+};
+
 export let findRegency = async (req, res) => {
     let q = req.params;
     let que = req.query;
@@ -35,12 +40,12 @@ export let findRegency = async (req, res) => {
             let filter = `name data.${que.f} -_id`;
             que.onlyData
                 ? (async () => {
-                      filter = `name data.${que.f}.t -_id`;
+                      filter = `data.${que.f}.t -_id`;
                       try {
                           let temp = que.f.split(" ");
                           if (temp.length === 1) obj = await kab.findOne({ name: q.kabupaten }, filter).lean();
                           if (temp.length > 1) {
-                              filter = "name ";
+                              filter = "";
                               temp.forEach((e) => {
                                   filter += `data.${e}.t `;
                               });
@@ -52,7 +57,7 @@ export let findRegency = async (req, res) => {
                           res.status(400).json({ message: "Bad request, Silahkan cek query kamu" });
                       }
                       try {
-                          obj.length === 0 && obj !== undefined ? res.status(404).json({ message: "Kabupaten tidak ditemukan" }) : res.status(200).json(obj);
+                          obj.length === 0 && obj !== undefined ? res.status(404).json({ message: "Kabupaten tidak ditemukan" }) : res.status(200).json(obj.data);
                       } catch (e) {
                           L.error("kesalahan init obj");
                       }

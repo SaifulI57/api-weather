@@ -9,50 +9,79 @@
   "name": "aceh",
   "path": "*.xml"
   "date": "3 feb 2024, 20:59:21 WIB",
-  "kab": {
-    "acehbarat": {},
-    ...
-  }
-  ...
-}
-```
-
--   GET /region/:provinsi?f=kab
-
-```json
-{
-  "achebarat": {},
   ...
 }
 ```
 
 ## Regency
 
--   GET /region/:provinsi/regency/:kabupaten
+-   GET /regency/:kabupaten
 
 ```json
 {
-  "hu":{
-    '0': {
-      "name": "humidity",
-      "data": [arr],
-      "type": "hourly",
-      "data": "202402030000"
+  "name": "kediri"
+  "data":{
+    "hu":{
+      "format": "hourly",
+      "t":[{
+        "h": "0",
+        "value": ["90 %"]
+        ...
+      }]
     }
-  },
+    ...
+  }
   ...
 }
 ```
 
--   GET /region/:provinsi/regency/:kabupaten?f=hu
+-   GET /regency/:kabupaten?f=hu
 
 ```json
 {
-  '0': {
-    "name": "humidity",
-    "data": [arr],
-    "type": "hourly",
-    "data": "202402030000"
-   }
+    "name": "kediri",
+    "data": {
+        "hu": {
+            "format": "hourly",
+            "t": [
+                {
+                    "h": "0",
+                    "value": ["90 %"]
+                },
+                ...
+            ]
+        }
+    }
+}
+```
+
+-   GET /regency/:kabupaten?f=hu+humin
+
+```json
+{
+    "name": "kediri",
+    "data": {
+        "hu": {
+          "format": "hourly",
+          ...
+        },
+        "humin": {
+          "format": "daily",
+          ...
+        }
+    }
+}
+```
+
+-   GET /regency/:kabupaten?f=hu+humin&onlyData=true
+
+```json
+{
+    "hu": {
+      "t": [...]
+    },
+    "humin": {
+      "t": [...]
+    }
 }
 ```
