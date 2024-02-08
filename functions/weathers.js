@@ -3,9 +3,9 @@ import { DOMParser as xdom } from "xmldom";
 import axios from "axios";
 import Logging from "../logging/Logging.js";
 import { prov } from "../schema/prov.js";
-import fs from "fs";
+// import fs from "fs";
+import { kab } from "../schema/kab.js";
 let L = new Logging();
-
 let jd = new jdom();
 let xd = new xdom();
 
@@ -29,10 +29,40 @@ export let getUpdates = async () => {
     return data;
 };
 
-// export let getProvinsi = async;
-// let updateData = async (d) => {
-//     await Prov.findOne({ where: { update: d } });
-// };
+export let getProvinsiUpdate = async () => {
+    let data = await axios.get(url);
+    let df = new jdom(data.data);
+    let tr = df.window.document.getElementsByTagName("tr");
+    return tr[1].cells[3].textContent;
+};
+
+export let updateAll = async () => {
+    let provs = await getUpdates();
+    let kabs = await start();
+
+    try {
+        Object.keys(provs).forEach((e) => {
+            (async (a, b) => {
+                await prov.findOneAndUpdate({ name: a }, { update: b });
+            })(e, provs[e].update);
+        });
+        L.info("Province Updated");
+    } catch (e) {
+        L.error("error on updating date");
+    }
+    try {
+        Object.keys(kabs).forEach((e) => {
+            kabs[e].forEach((d) => {
+                (async (a, b) => {
+                    await kab.findOneAndUpdate({ name: a }, { data: b });
+                })(d.name, d.data);
+            });
+        });
+        L.info("Kabupaten Updated");
+    } catch (e) {
+        L.error("error on updating data");
+    }
+};
 
 let getData = async (d) => {
     let obj = {};

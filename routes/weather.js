@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { findRegency } from "../functions/tomongo.js";
+import { findRegency, updating } from "../functions/tomongo.js";
 
 let apiRoutes = Router();
 
-// apiRoutes.get('/region/:provinsi', getKabupaten);
+apiRoutes.get("/update", updating);
 apiRoutes.get("/regency/:kabupaten", findRegency);
 
 export { apiRoutes };
