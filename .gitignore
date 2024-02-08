@@ -1,6 +1,5 @@
 node_modules
 .vscode
-.env
 .prettierrc
-forecast.json
+foracast.json
 package-lock.json
