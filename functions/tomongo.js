@@ -65,7 +65,7 @@ export let findRegency = async (req, res) => {
                 : (async () => {
                       try {
                           let temp = que.f.split(" ");
-                          if (que.f.length === 2) obj = await kab.findOne({ name: q.kabupaten }, filter).lean();
+                          if (temp.length === 1) obj = await kab.findOne({ name: q.kabupaten }, filter).lean();
                           if (temp.length > 1) {
                               filter = "name ";
                               temp.forEach((e) => {
