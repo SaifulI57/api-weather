@@ -3,3 +3,4 @@ node_modules
 .prettierrc
 foracast.json
 package-lock.json
+.env
