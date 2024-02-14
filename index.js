@@ -3,8 +3,8 @@ import env from "dotenv";
 import bodyParser from "body-parser";
 import Logging from "./logging/Logging.js";
 import { apiRoutes } from "./routes/weather.js";
+import { conn, run } from "./v1/functions/tomongo.js";
 
-import { conn, run } from "./functions/tomongo.js";
 let app = express();
 
 const L = new Logging();

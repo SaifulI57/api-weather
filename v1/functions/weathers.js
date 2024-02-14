@@ -1,7 +1,7 @@
 import { JSDOM as jdom } from "jsdom";
 import { DOMParser as xdom } from "xmldom";
 import axios from "axios";
-import Logging from "../logging/Logging.js";
+import Logging from "../../logging/Logging.js";
 import { prov } from "../schema/prov.js";
 // import fs from "fs";
 import { kab } from "../schema/kab.js";

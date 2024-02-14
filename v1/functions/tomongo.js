@@ -1,7 +1,7 @@
 import { getProvinsiUpdate, getUpdates, start, updateAll } from "../functions/weathers.js";
 import mongoose from "mongoose";
 import { prov } from "../schema/prov.js";
-import Logging from "../logging/Logging.js";
+import Logging from "../../logging/Logging.js";
 import { kab } from "./../schema/kab.js";
 import { url } from "./../config.js";
 let L = new Logging();
@@ -116,7 +116,7 @@ export let run = async () => {
 
         if (now !== update) {
             await updateAll();
-            L.info("Up to date");
+            L.info("now data is up to date");
         } else {
             L.info("Up to date");
         }
