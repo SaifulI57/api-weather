@@ -158,7 +158,7 @@ Sumber: [Data Terbuka BMKG](https://data.bmkg.go.id/)
 
 **Contoh**
 
--   GET `/api/v2/:provinsi`
+-   GET `/api/v2/jawa timur`
 
 **Response**
 
@@ -222,7 +222,7 @@ Sumber: [Data Terbuka BMKG](https://data.bmkg.go.id/)
 
 **Contoh**
 
--   GET `/api/v2/regency/:kabupaten`
+-   GET `/api/v2/regency/kediri`
 
 **Response**
 
