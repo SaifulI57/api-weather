@@ -79,10 +79,10 @@ export const allRegency = async (req, res) => {
                 o = u.issued;
                 result.push(u.data);
             }
-            await redis.set("issued", o, "EX", 3600);
+            await redis.set("issued", JSON.stringify(o), "EX", 3600);
             await redis.set(q.provinsi.toLowerCase(), JSON.stringify(result), "EX", 3600);
         }
-        res.status(200).json({ status: "success", message: "null", data: cache === false ? { issued: o, area: result } : { issued: o, area: JSON.parse(result) } });
+        res.status(200).json({ status: "success", message: "null", data: cache === false ? { issued: o, area: result } : { issued: JSON.parse(o), area: JSON.parse(result) } });
     } catch (e) {
         console.log(e);
         res.status(404).json({ status: "failed", message: "not found" });

@@ -1,4 +1,14 @@
-<h1 align="center">Endpoint</h1>
+<h1 align="center">REST API Weather</h1>
+
+REST API prakiraan cuaca, suhu udara, kelembapan udara, kecepatan angin, dan arah angin untuk kota-kota besar di 34 provinsi di Indonesia dalam waktu 3 harian.
+
+Sumber: [Data Terbuka BMKG](https://data.bmkg.go.id/)
+
+## Demo
+
+[https://dizzy-pike-slippers.cyclic.app/](https://dizzy-pike-slippers.cyclic.app/) [https://0wwhsalsx2.execute-api.us-east-1.amazonaws.com/](https://0wwhsalsx2.execute-api.us-east-1.amazonaws.com/)
+
+> :fire:Source Code Aws Serverless: [https://github.com/SaifulI57/lambda-api-weather](https://github.com/SaifulI57/lambda-api-weather)
 
 # V1
 
@@ -6,11 +16,19 @@
 
 -   Express.js
 -   Node.js
--   mongoose
+-   Mongodb
 
-## Region
+## ENDPOINT
 
--   GET /api/v1/region/:provinsi
+**Region**
+
+-   GET `/api/v1/region/:provinsi`
+
+**Contoh:**
+
+-   GET `/api/v1/region/aceh`
+
+**Response**
 
 ```json
 {
@@ -21,9 +39,15 @@
 }
 ```
 
-## Regency
+**Regency**
 
--   GET /api/v1/regency/:kabupaten
+-   GET `/api/v1/regency/:kabupaten`
+
+**Contoh:**
+
+-   GET `/api/v1/regency/kediri`
+
+**Response**
 
 ```json
 {
@@ -43,7 +67,15 @@
 }
 ```
 
--   GET /api/v1/regency/:kabupaten?f=hu
+**Filter**
+
+-   GET `/api/v1/regency/:kabupaten?f=hu`
+
+**Contoh:**
+
+-   GET `/api/v1/regency/kediri?f=hu`
+
+**Response**
 
 ```json
 {
@@ -63,7 +95,15 @@
 }
 ```
 
--   GET /api/v1/regency/:kabupaten?f=hu+humin
+**Filter**
+
+-   GET `/api/v1/regency/:kabupaten?f=hu+humin`
+
+**Contoh:**
+
+-   GET `/api/v1/regency/:kabupaten?f=hu+humin`
+
+**Response**
 
 ```json
 {
@@ -81,7 +121,15 @@
 }
 ```
 
--   GET /api/v1/regency/:kabupaten?f=hu+humin&onlyData=true
+**Filter**
+
+-   GET `/api/v1/regency/:kabupaten?f=hu+humin&onlyData=true`
+
+**Contoh:**
+
+-   GET `/api/v1/regency/kediri?f=hu+humin&onlyData=true`
+
+**Response**
 
 ```json
 {
@@ -102,9 +150,17 @@
 -   Express
 -   Redis
 
-## Region
+## Endpoint
 
--   GET /api/v2/:provinsi
+**Region**
+
+-   GET `/api/v2/:provinsi`
+
+**Contoh**
+
+-   GET `/api/v2/:provinsi`
+
+**Response**
 
 ```json
 {
@@ -160,9 +216,15 @@
 }
 ```
 
-## Regency
+**Regency**
 
--   GET /api/v2/regency/:kabupaten
+-   GET `/api/v2/regency/:kabupaten`
+
+**Contoh**
+
+-   GET `/api/v2/regency/:kabupaten`
+
+**Response**
 
 ```json
 {
