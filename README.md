@@ -6,7 +6,8 @@ Sumber: [Data Terbuka BMKG](https://data.bmkg.go.id/)
 
 ## Demo
 
-[https://dizzy-pike-slippers.cyclic.app/](https://dizzy-pike-slippers.cyclic.app/) [https://0wwhsalsx2.execute-api.us-east-1.amazonaws.com/](https://0wwhsalsx2.execute-api.us-east-1.amazonaws.com/)
+-   [https://dizzy-pike-slippers.cyclic.app/](https://dizzy-pike-slippers.cyclic.app/)
+-   [https://0wwhsalsx2.execute-api.us-east-1.amazonaws.com/](https://0wwhsalsx2.execute-api.us-east-1.amazonaws.com/)
 
 > :fire:Source Code Aws Serverless: [https://github.com/SaifulI57/lambda-api-weather](https://github.com/SaifulI57/lambda-api-weather)
 
